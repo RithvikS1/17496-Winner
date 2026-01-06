@@ -1,12 +1,12 @@
-package org.firstinspires.ftc.teamcode;
+package org.firstinspires.ftc.teamcode.Autos;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 
-@Autonomous(name = "TriangleAutoBlue", group = "Linear OpMode")
-public class TriangleAutoBlue extends LinearOpMode {
+@Autonomous(name = "FarAutoBlue", group = "Linear OpMode")
+public class FarAutoBlue extends LinearOpMode {
 
     // Drive motors
     private DcMotor LB, LF, RB, RF;

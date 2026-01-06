@@ -1,12 +1,14 @@
-package org.firstinspires.ftc.teamcode;
+package org.firstinspires.ftc.teamcode.Autos.Close_PreReq;
 
+import com.acmerobotics.dashboard.config.Config;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 
+import org.firstinspires.ftc.teamcode.AprilTagItems.AprilTag;
 import org.firstinspires.ftc.vision.apriltag.AprilTagDetection;
-
+@Config
 @Autonomous(name = "BALL_COLLECTION")
 public class BallCollection extends LinearOpMode {
 
@@ -16,13 +18,13 @@ public class BallCollection extends LinearOpMode {
     // Intake + Launcher
     private DcMotorEx IntakeEx, LSX, RSX;
 
+
     // Vision
     private AprilTag vision;
 
     // Constants
     private static double TURN_POWER = 0.17;
-    private static final double TARGET_ANGLE_DEG = 45.0;
-
+    public static long TURN_TIME = 1200;
     private static final double LAUNCHER_RPM = 1400;
 
     @Override
@@ -55,15 +57,29 @@ public class BallCollection extends LinearOpMode {
         if (isStopRequested()) return;
 
         // ---------------------------
+        // STEP 0 — DRIVE FORWARD
+        // ---------------------------
+        drive(0.3, 0.3, 0.3, 0.3);
+        sleep(400);
+        stopDrive();
+
+        // ---------------------------
+        // STEP 0.1 — TURN TO BALLS
+        // ---------------------------
+        drive(0.4, 0.4, -0.4, -0.4);
+        sleep(TURN_TIME);
+        stopDrive();
+
+        // ---------------------------
         // STEP 1 — START INTAKE
         // ---------------------------
         IntakeEx.setPower(1.0);
 
         // ---------------------------
-        // STEP 2 — DRIVE FORWARD
+        // STEP 2 — DRIVE INTO BALLS
         // ---------------------------
         drive(0.3, 0.3, 0.3, 0.3);
-        sleep(2050);
+        sleep(2700);
         stopDrive();
 
         // ---------------------------
@@ -114,8 +130,6 @@ public class BallCollection extends LinearOpMode {
         long turnDuration = System.currentTimeMillis() - turnStartTime;
 
 
-
-
         // ---------------------------
         // STEP 6 — SLIGHT OUTTAKE
         // ---------------------------
@@ -147,7 +161,7 @@ public class BallCollection extends LinearOpMode {
         sleep(turnDuration);
         TURN_POWER = 0.3;
         drive(TURN_POWER, TURN_POWER, -TURN_POWER, -TURN_POWER);
-        sleep(80);
+        sleep(70);
         stopDrive();
     }
 

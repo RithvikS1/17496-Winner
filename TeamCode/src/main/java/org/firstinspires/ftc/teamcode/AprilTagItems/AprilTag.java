@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode;
+package org.firstinspires.ftc.teamcode.AprilTagItems;
 
 import android.util.Size;
 
@@ -186,6 +186,8 @@ public class AprilTag {
                     telemetry.addData("Raw X (m)", "%.3f", detection.rawPose.x);
                     telemetry.addData("Raw Y (m)", "%.3f", detection.rawPose.y);
                     telemetry.addData("Raw Z (m)", "%.3f", detection.rawPose.z);
+                    telemetry.addData("Angle atan2(X/Z) (deg)", "%.2f", getAngleDegrees(detection));
+
                 } else {
                     telemetry.addLine("Raw Pose: null");
                 }
@@ -217,6 +219,8 @@ public class AprilTag {
                 packet.put("RawPose X (m)", detection.rawPose.x);
                 packet.put("RawPose Y (m)", detection.rawPose.y);
                 packet.put("RawPose Z (m)", detection.rawPose.z);
+                packet.put("Angle arctan(X/Z) (deg)", getAngleDegrees(detection));
+
             } else {
                 packet.put("RawPose", "null");
             }
@@ -313,4 +317,17 @@ public class AprilTag {
         }
         return null; // not found
     }
+
+    /** Returns angle in DEGREES: atan2(rawX / rawZ). */
+    public double getAngleDegrees(AprilTagDetection detection) {
+        if (detection == null || detection.rawPose == null) return 0;
+
+        double x = detection.rawPose.x;
+        double z = detection.rawPose.z;
+
+        if (Math.abs(z) < 1e-6) return 0; // prevent divide-by-zero
+
+        return Math.toDegrees(Math.atan2(x, z));
+    }
+
 }
