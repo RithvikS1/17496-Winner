@@ -6,8 +6,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
-import org.firstinspires.ftc.teamcode.BallColumnPipeline;
-
+import org.firstinspires.ftc.teamcode.vision.BallColumnPipeline;
 import org.openftc.easyopencv.*;
 import com.acmerobotics.dashboard.config.Config;
 
