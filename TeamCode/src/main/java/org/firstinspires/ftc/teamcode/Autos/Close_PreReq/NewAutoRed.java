@@ -7,7 +7,7 @@ import org.firstinspires.ftc.teamcode.AprilTagItems.AprilTag;
 import org.firstinspires.ftc.vision.apriltag.AprilTagDetection;
 
 @Autonomous(name = "NewAutoRed")
-public class NewAuto extends LinearOpMode {
+public class NewAutoRed extends LinearOpMode {
 
     // Drivetrain
     private DcMotorEx LF, LB, RF, RB;

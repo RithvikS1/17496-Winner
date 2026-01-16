@@ -9,6 +9,9 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.config.Config;
 
+import org.firstinspires.ftc.teamcode.AprilTagItems.AprilTag;
+import org.firstinspires.ftc.vision.apriltag.AprilTagDetection;
+
 @Config
 @TeleOp(name = "LegoNinjago")
 public class LegoNinjago extends LinearOpMode {
@@ -30,13 +33,8 @@ public class LegoNinjago extends LinearOpMode {
 
     // Shooter velocity (tunable in FTC Dashboard)
     public static double SHOOTER_VELOCITY = 1425;
-    public static double INTAKE_VELOCITY = 1600;
+    public static double INTAKE_VELOCITY = 1800;
 
-    //100% of motors
-    public static double LB_STRAFE_OFFSET=0.5;
-    public static double LF_STRAFE_OFFSET=0.5;
-    public static double RB_STRAFE_OFFSET=0.5;
-    public static double RF_STRAFE_OFFSET=0.5;
 
     // Odometry variables
     double x = 0.0;
@@ -51,6 +49,8 @@ public class LegoNinjago extends LinearOpMode {
     static final double TRACK_WIDTH = 12.0;
 
     int prevLB = 0, prevLF = 0, prevRB = 0, prevRF = 0;
+
+    AprilTag cam;
 
     @Override
     public void runOpMode() {
@@ -89,33 +89,33 @@ public class LegoNinjago extends LinearOpMode {
         telemetry.addData("Status", "Initialized");
         telemetry.update();
 
+        telemetry.addLine("Initializing AprilTag Vision...");
+        telemetry.update();
+
+        // Create your AprilTag vision object
+        cam = new AprilTag(hardwareMap, telemetry);
+
+        telemetry.addLine("Vision Ready!");
+        telemetry.update();
+
+
         waitForStart();
         runtime.reset();
 
         while (opModeIsActive()) {
             shooterEx();
             intake();
+            camera();
 
             // Mecanum drive calculations
             double forward = -gamepad1.left_stick_y;
             double strafe = gamepad1.left_stick_x;
             double turn = gamepad1.right_stick_x;
 
-            lbPower = forward - LB_STRAFE_OFFSET*strafe + turn;
-            lfPower = forward + LF_STRAFE_OFFSET*strafe + turn;
-            rbPower = forward + RB_STRAFE_OFFSET*strafe - turn;
-            rfPower = forward - RF_STRAFE_OFFSET*strafe - turn;
-
-
-            if (strafe>=0.75){
-                forward = 0;
-                turn = 0;
-            }
-            /*lbPower = forward - strafe + turn;
-            rbPower = forward + strafe - turn;
+            lbPower = forward - strafe + turn;
             lfPower = forward + strafe + turn;
+            rbPower = forward + strafe - turn;
             rfPower = forward - strafe - turn;
-            */
 
             // Normalize
             double max = Math.max(Math.max(Math.abs(lfPower), Math.abs(rfPower)),
@@ -183,14 +183,11 @@ public class LegoNinjago extends LinearOpMode {
             telemetry.addData("X (in)", x);
             telemetry.addData("Y (in)", y);
             telemetry.addData("Heading (degrees)", heading);
-            telemetry.addData("LB Strafe Offset", LB_STRAFE_OFFSET);
-            telemetry.addData("LF Strafe Offset", LF_STRAFE_OFFSET);
-            telemetry.addData("RB Strafe Offset", RB_STRAFE_OFFSET);
-            telemetry.addData("RF Strafe Offset", RF_STRAFE_OFFSET);
             telemetry.update();
 
             heading *= Math.PI/180;
         }
+        cam.cameraOff();
     }
 
     // Shooter control
@@ -231,5 +228,25 @@ public class LegoNinjago extends LinearOpMode {
             IntakeEx.setVelocity(-INTAKE_VELOCITY);
         else
             IntakeEx.setVelocity(0);
+    }
+
+    private void camera(){
+        cam.update();
+
+        // Get the most recent detection
+        AprilTagDetection tag = cam.getLatestTag();
+
+        // ------------------------------
+        // DRIVER STATION TELEMETRY
+        // ------------------------------
+        cam.addTelemetry();
+        telemetry.update();
+
+        // ------------------------------
+        // FTC DASHBOARD TELEMETRY
+        // ------------------------------
+        cam.addDashboardTelemetry(tag);
+
+        sleep(1);
     }
 }

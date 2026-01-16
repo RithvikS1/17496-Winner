@@ -2,7 +2,7 @@
 package org.firstinspires.ftc.teamcode;
 =======
 package org.firstinspires.ftc.teamcode.Autos.Close_PreReq;
->>>>>>> bbc535adca325d0b476f9461e2bb3bd42dbbb3b0:TeamCode/src/main/java/org/firstinspires/ftc/teamcode/Autos/Close_PreReq/BallColumnPipeline.java
+bbc535adca325d0b476f9461e2bb3bd42dbbb3b0:TeamCode/src/main/java/org/firstinspires/ftc/teamcode/Autos/Close_PreReq/BallColumnPipeline.java
 
 import org.opencv.core.*;
 import org.opencv.imgproc.Imgproc;
