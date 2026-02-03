@@ -1,6 +1,9 @@
+<<<<<<< HEAD
 // TeamCode/build.gradle
 
 // Apply shared FTC build definitions
+=======
+>>>>>>> 2bd8797092d9d11cecb7e4a8d76370da29e621d5
 apply from: '../build.common.gradle'
 apply from: '../build.dependencies.gradle'
 
@@ -16,6 +19,11 @@ dependencies {
     // Link to the main FTC Robot Controller module
     implementation project(':FtcRobotController')
 
+<<<<<<< HEAD
     // ✅ FTC Dashboard library for telemetry and live tuning
     implementation 'com.acmerobotics.dashboard:dashboard:0.4.8'
+=======
+    // FTC Dashboard
+    implementation "com.acmerobotics.dashboard:dashboard:0.5.1"
+>>>>>>> 2bd8797092d9d11cecb7e4a8d76370da29e621d5
 }

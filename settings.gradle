@@ -1,2 +1,11 @@
+dependencyResolutionManagement {
+    repositoriesMode.set(RepositoriesMode.PREFER_SETTINGS)
+    repositories {
+        mavenCentral()
+        google()
+        maven { url = "https://maven.brott.dev/" } // FTC Dashboard
+    }
+}
+
 include ':FtcRobotController'
 include ':TeamCode'
